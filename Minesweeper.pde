@@ -20,12 +20,12 @@ void setup ()
   isLost = false;
   bombsMarkerY = 155;
     currentPage = 0;
-    bombsPercent = 0.1;
+    bombsPercent = 0.15;
     rows = 20;
     columns = 20;
     bombsNum = 50;
     markedBombs = 0;
-    size(400, 420);
+    size(400, 430);
     textAlign(CENTER,CENTER);
     
     // make the manager
@@ -81,8 +81,8 @@ public void displayLosingMessage()
     buttons[13][12].setShowingMessage(true);
     buttons[14][13].setShowingMessage(true);
     buttons[14][6].setShowingMessage(true);
-    buttons[8][7].setShowingMessage(true);
     buttons[8][6].setShowingMessage(true);
+    buttons[8][7].setShowingMessage(true);
     buttons[8][12].setShowingMessage(true);
     buttons[8][13].setShowingMessage(true);
     buttons[9][14].setShowingMessage(true);
@@ -149,13 +149,13 @@ public class MSButton
               currentPage = 1;
             }else if(mouseY > 120 && mouseY < 140){
               bombsMarkerY = 125;
-              bombsPercent = 0.05;
+              bombsPercent = 0.1;
             }else if(mouseY > 140 && mouseY < 170){
                   bombsMarkerY = 155;
-                  bombsPercent = .1;
+                  bombsPercent = .15;
             }else if(mouseY > 170 && mouseY < 200){
               bombsMarkerY = 185;
-             bombsPercent = .15;
+             bombsPercent = .2;
             }
           break;
           case 1:
@@ -211,7 +211,7 @@ public class MSButton
          break;
         case 1:
           if (showingMessage)
-            fill(255, 246, 89);
+            fill(0, 0, 255);
           else if (marked)
               fill(0);
           else if( (clicked || isLost) && bombs.contains(this) ) 
@@ -227,8 +227,8 @@ public class MSButton
           fill(0);
           text(label,x+width/2,y+height/2);
           fill(255);
-          textSize(10);
-          text("Bombs Left: " + (bombsNum - markedBombs), 100, 410);
+          textSize(20);
+          text("Bombs Left: " + (bombsNum - markedBombs), 200, 415);
           break;
       }
     }
