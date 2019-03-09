@@ -20,7 +20,7 @@ void setup ()
   isLost = false;
   bombsMarkerY = 155;
     currentPage = 0;
-    bombsPercent = 0.15;
+    bombsPercent = 0.1;
     rows = 20;
     columns = 20;
     bombsNum = 50;
@@ -103,8 +103,6 @@ public void displayWinningMessage()
     buttons[9][6].setShowingMessage(true);
     buttons[9][12].setShowingMessage(true);
     buttons[9][13].setShowingMessage(true);
-    buttons[8][14].setShowingMessage(true);
-    buttons[8][5].setShowingMessage(true);
     //your code here
 }
 
@@ -149,13 +147,13 @@ public class MSButton
               currentPage = 1;
             }else if(mouseY > 120 && mouseY < 140){
               bombsMarkerY = 125;
-              bombsPercent = 0.1;
+              bombsPercent = 0.05;
             }else if(mouseY > 140 && mouseY < 170){
                   bombsMarkerY = 155;
-                  bombsPercent = .15;
+                  bombsPercent = .1;
             }else if(mouseY > 170 && mouseY < 200){
               bombsMarkerY = 185;
-             bombsPercent = .2;
+             bombsPercent = .15;
             }
           break;
           case 1:
