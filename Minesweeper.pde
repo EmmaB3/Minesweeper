@@ -4,23 +4,23 @@ import de.bezier.guido.*;
 //Declare and initialize NUM_ROWS and NUM_COLS = 20
 private MSButton[][] buttons; //2d array of minesweeper buttons
 private ArrayList <MSButton> bombs; //ArrayList of just the minesweeper buttons that are mined
-int rows, columns,bombsNum,markedBombs;
-enum Page{
+int rows, columns,bombsNum,markedBombs,currentPage,bombsMarkerY;
+/*enum Page{
   START, GAME
 }
 enum BombAmt{
   SMALL, MED, LARGE
 }
 Page currentPage;
-BombAmt bombAmt;
-int bombsMarkerY;
+BombAmt bombAmt;*/
+float bombsPercent;
 boolean isLost;
 void setup ()
 {
   isLost = false;
   bombsMarkerY = 155;
-    currentPage = Page.START;
-    bombAmt = BombAmt.MED;
+    currentPage = 0;
+    bombsPercent = 0.1;
     rows = 20;
     columns = 20;
     bombsNum = 50;
@@ -42,6 +42,7 @@ void setup ()
 }
 public void setBombs()
 {
+  bombsNum = (int)(bombsPercent * 400);
     while(bombs.size() < bombsNum){
         int row = (int)(Math.random()*rows);
         int column = (int)(Math.random()*columns);
@@ -110,7 +111,6 @@ public void displayWinningMessage()
 public class MSButton
 {
     private int r, c;
-    private int cr;
     private float x,y, width, height;
     private boolean clicked, marked, showingMessage;
     private String label;
@@ -123,7 +123,6 @@ public class MSButton
         c = cc; 
         x = c*width;
         y = r*height;
-        cr = 100;
         label = "";
         marked = clicked = false;
         Interactive.add( this ); // register it with the manager
@@ -144,22 +143,22 @@ public class MSButton
     public void mousePressed () 
     {
         switch(currentPage){
-          case START:
+          case 0:
             if(mouseX >= 100 && mouseX <= 300 && mouseY >= 250 && mouseY <= 350){
               setBombs();
-              currentPage = Page.GAME;
+              currentPage = 1;
             }else if(mouseY > 120 && mouseY < 140){
               bombsMarkerY = 125;
-              bombAmt = BombAmt.SMALL;
+              bombsPercent = 0.05;
             }else if(mouseY > 140 && mouseY < 170){
                   bombsMarkerY = 155;
-                  bombAmt = BombAmt.MED;
+                  bombsPercent = .1;
             }else if(mouseY > 170 && mouseY < 200){
               bombsMarkerY = 185;
-              bombAmt = BombAmt.LARGE;
+             bombsPercent = .15;
             }
           break;
-          case GAME:
+          case 1:
           if(!isLost){
           if(mouseButton == RIGHT){
             if(!isMarked() && !isClicked()){
@@ -194,7 +193,7 @@ public class MSButton
     public void draw () 
     {    
       switch(currentPage){
-        case START:
+        case 0:
           fill(255);
           textAlign(CENTER);
           textSize(20);
@@ -204,15 +203,13 @@ public class MSButton
           text("Medium", 200, 160);
           text("Hard", 200, 190);
           ellipse(150, bombsMarkerY, 10,10);
-          double bombsPercent = bombAmt == BombAmt.SMALL? 0.05 : bombAmt == BombAmt.MED? 0.1 : 0.15;
-          bombsNum = (int)(bombsPercent * 400);
           rectMode(CENTER);
           rect(200, 300, 200, 50);
           fill(0);
           textSize(45);
           text("Start",200,315);
          break;
-        case GAME:
+        case 1:
           if (showingMessage)
             fill(255, 246, 89);
           else if (marked)
